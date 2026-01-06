@@ -17,7 +17,7 @@ spec:
         - name: artifact-registry-secret
       containers:
       - name: vllm
-        image: us-central1-docker.pkg.dev/my-project/llm-demo/tinyllama-vllm:v1
+        image: us-central1-docker.pkg.dev/kcns-spoke-project02/llm-demo/tinyllama-vllm:v1
         ports:
         - containerPort: 8000
         env:
