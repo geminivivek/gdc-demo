@@ -13,6 +13,8 @@ spec:
       labels:
         app: tinyllama
     spec:
+      imagePullSecrets:
+        - name: artifact-registry-secret
       containers:
       - name: vllm
         image: us-central1-docker.pkg.dev/my-project/llm-demo/tinyllama-vllm:v1
