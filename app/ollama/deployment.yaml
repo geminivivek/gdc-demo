@@ -13,6 +13,8 @@ spec:
       labels:
         app: ollama
     spec:
+      imagePullSecrets:
+        - name: artifact-registry-secret
       initContainers:
         - name: pull-phi3
           image: us-central1-docker.pkg.dev/kcns-spoke-project02/ollama/ollama:latest
