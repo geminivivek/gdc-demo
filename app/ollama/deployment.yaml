@@ -15,15 +15,24 @@ spec:
     spec:
       imagePullSecrets:
         - name: artifact-registry-secret
+
+      volumes:
+        # Shared volume for model files
+        - name: ollama-models
+          emptyDir: {}
+
       initContainers:
         - name: pull-phi3
           image: us-central1-docker.pkg.dev/kcns-spoke-project02/ollama/ollama:latest
+          imagePullPolicy: IfNotPresent
           command: ["sh", "-c"]
           args:
             - |
-              ollama serve &
-              sleep 6
-              ollama pull phi3:mini
+              # Pull the model into the shared volume
+              ollama pull phi3:mini --allow-network
+          volumeMounts:
+            - name: ollama-models
+              mountPath: /root/.ollama
           resources:
             requests:
               cpu: "1"
@@ -38,12 +47,18 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 11434
+          volumeMounts:
+            - name: ollama-models
+              mountPath: /root/.ollama
+          env:
+            - name: OLLAMA_ALLOW_NETWORK
+              value: "1"  # Allow runtime download if needed
           resources:
             requests:
               cpu: "2"
-              memory: "8Gi"
+              memory: "6Gi"
             limits:
-              cpu: "2"
+              cpu: "4"
               memory: "8Gi"
           readinessProbe:
             httpGet:
