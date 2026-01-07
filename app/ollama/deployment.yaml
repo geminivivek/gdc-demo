@@ -38,10 +38,10 @@ spec:
             - containerPort: 11434
           resources:
             requests:
-              cpu: "3"
+              cpu: "2"
               memory: "8Gi"
             limits:
-              cpu: "4"
+              cpu: "2"
               memory: "8Gi"
           readinessProbe:
             httpGet:
